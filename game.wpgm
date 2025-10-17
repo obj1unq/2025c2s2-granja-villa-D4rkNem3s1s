@@ -1,3 +1,4 @@
+import bonus.*
 import wollok.game.*
 import personaje.*
 import cultivos.*
@@ -8,11 +9,24 @@ program farmville {
 	game.height(10)
 	game.width(10)
 	game.ground("ground.png")
-
+	
 	//  VISUALES
- 	game.addVisualCharacter(personaje)
- 	game.addVisual(new Maiz()) // Se agrega a modo de prueba
- 	
- 	//  COMIENZA
+	game.addVisualCharacter(personaje)
+	
+	keyboard.r().onPressDo({ personaje.regar() })
+	keyboard.c().onPressDo({ personaje.cosechar() })
+	keyboard.t().onPressDo({ personaje.sembrar(new Trigo()) })
+	keyboard.m().onPressDo({ personaje.sembrar(new Maiz()) })
+	keyboard.o().onPressDo({ personaje.sembrar(new Tomaco()) })
+	keyboard.v().onPressDo({ personaje.vender() })
+	keyboard.space().onPressDo({ personaje.informacion() })
+	keyboard.a().onPressDo({ personaje.dejarAspersor() })
+	
+	
+	game.addVisual(new Tienda(position = game.at(0, 9)))
+	game.addVisual(new Tienda(position = game.at(9, 9)))
+
+
+	//  COMIENZA
 	game.start()
 }
