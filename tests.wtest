@@ -1,0 +1,39 @@
+import personaje.*
+import wollok.game.*
+import bonus.*
+import cultivos.*
+
+describe "Cultivo" {
+  test "Sembrar" {
+    assert.notThat(personaje.hayCultivo())
+    personaje.sembrar(Maiz)
+    assert.that(personaje.hayCultivo())
+  }
+  test "regar" {
+    assert.notThat(personaje.hayCultivo())
+    personaje.sembrar(Maiz)
+    personaje.regar()
+    var cultivo = game.getObjectsIn(personaje.position()).find({ob => ob.esCultivo()})
+    assert.that(cultivo.esAdulto())
+  }
+  test "cosechar" {
+    assert.notThat(personaje.hayCultivo())
+    personaje.sembrar(Maiz)
+    assert.that(personaje.hayCultivo())
+    personaje.cosechar()
+    personaje.regar()
+  }
+}
+
+describe "aspersor" {
+  test "description" {
+    personaje.position(game.at(0, 2))
+    personaje.sembrar(Maiz)
+    personaje.regar()
+    personaje.position(game.at(1,2))
+    personaje.dejarAspersor()
+    personaje.position(game.at(0,2))
+    const cultivo = game.getObjectsIn(personaje.position()).filter({ob => ob.esCultivo() && ob.esAdulto()})
+    assert.that(cultivo.size() > 0)
+  }
+}
